@@ -48,3 +48,18 @@ response = openai.Image.create(
 # Extracting and printing the URL of the generated image from the OpenAI API response
 image_url = response['data'][0]['url']
 print ("\nThe generated image is at: {}".format(image_url))
+
+# Send a request to the url and receive the response
+response = requests.get(image_url)
+
+# Check if the request was successful (status code 200)
+if response.status_code == 200:
+    # Get the content of the response (the image data)
+    image_data = response.content
+    
+    # Save the image data to a file
+    with open("image.jpg", "wb") as f:
+        f.write(image_data)
+        print("Image saved successfully!")
+else:
+    print("Failed to download image.")
